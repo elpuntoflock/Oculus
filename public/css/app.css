@@ -2334,6 +2334,8 @@ textarea.form-control {
   position: absolute;
   margin-top: 0.3rem;
   margin-left: -1.25rem;
+  /* Se coloca 0, el llega como left:-9999 */
+  left: 0rem;
 }
 
 .form-check-input[disabled] ~ .form-check-label,
