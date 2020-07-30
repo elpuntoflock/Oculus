@@ -13,15 +13,17 @@ class CreateContactosTable extends Migration
      */
     public function up()
     {
-        Schema::create('conctactos', function (Blueprint $table) {
+       // Schema::drop('contactos_bk');
+      //  Schema::rename('contactos', 'contactos_bk');
+        Schema::create('contactos', function (Blueprint $table) {
             $table->id();
             $table->string('nombres', 50);
             $table->string('apellidos',50);
-            $table->string('apellido_casada',50);
+            $table->string('apellido_casada',50)->nullable();
             $table->string('sexo',1);
             $table->date('fecha_nac');
-            $table->string('tel_celular',20);
-            $table->string('tel_trabajo',20);
+            $table->string('tel_celular',20)->nullable();
+            $table->string('tel_trabajo',20)->nullable();
             $table->string('observaciones');
             $table->timestamps();
             
@@ -35,6 +37,6 @@ class CreateContactosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('conctactos');
+        Schema::drop('contactos');
     }
 }

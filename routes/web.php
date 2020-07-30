@@ -27,10 +27,6 @@ Route::get('nombre/{nombre}', function (string $nombre) {
 
 });
 
-Route::get('edad/{edad}', function (string $edad) {
-    return "Hola desde web.php mi nombre " . $edad ;
-
-})->where('edad', '[0-9]+');
 
 Route::get('user/{id}', function ($id) {
     //
@@ -40,3 +36,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/master', 'MasterController@index');
+
+Route::resource('contacto', 'ContactoController');

@@ -68,8 +68,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="components/buttons.html">
-                                <span class="sub-item">Buttons</span>
+                            <a href="../contacto/create">
+                                <span class="sub-item">Crear</span>
                             </a>
                         </li>
                         <li>

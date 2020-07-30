@@ -1,6 +1,6 @@
 <!-- Header -->
 @include('layouts.part.header')
-<body>
+<body onload="msgalerta()">
 	@auth
 	<div class="wrapper">
 	@endauth
@@ -28,6 +28,7 @@
 						<h4 class="page-title">@yield('title')</h4>
 					</div>
 					<div class="page-category">@yield('Description')</div>
+					
 					@yield('content')
 				</div>
 			</div>
@@ -79,9 +80,6 @@
 	<script src="{{ asset('js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
 	<script src="{{ asset('js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 
-	<!-- Google Maps Plugin -->
-	<script src="{{ asset('js/plugin/jqvmap/gmaps/gmaps.js') }}"></script>
-
 	<!-- Dropzone -->
 	<script src="{{ asset('js/plugin/dropzone/dropzone.min.js') }}"></script>
 
@@ -111,5 +109,8 @@
 
 	<!-- Azzara JS -->
 	<script src="{{ asset('js/ready.min.js') }}"></script>
+
+	@include('layouts.part.alert')
+
 </body>
 </html>
