@@ -11,6 +11,6 @@ class Contacto extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombres', 'apellidos', 'sexo','fecha_nac','observaciones'];
+    protected $fillable = ['nombres', 'apellidos', 'sexo','fecha_nac', 'tel_celular', 'tel_trabajo','observaciones'];
 }
 

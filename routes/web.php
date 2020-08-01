@@ -31,6 +31,7 @@ Route::get('nombre/{nombre}', function (string $nombre) {
 Route::get('user/{id}', function ($id) {
     //
 })->where('id', '[0-9]+');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -38,3 +39,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/master', 'MasterController@index');
 
 Route::resource('contacto', 'ContactoController');
+
+/* Route::post('contacto/create', function () {
+    // Validate the request...
+
+    return back()->withInput();
+}
+);  */

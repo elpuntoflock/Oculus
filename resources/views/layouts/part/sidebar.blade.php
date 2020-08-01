@@ -63,12 +63,12 @@
                 <div class="collapse" id="clientes">
                     <ul class="nav nav-collapse">
                         <li>
-                            <a href="components/Buscar">
+                            <a href="{{ url('contacto') }}">
                                 <span class="sub-item">Buscar</span>
                             </a>
                         </li>
                         <li>
-                            <a href="../contacto/create">
+                            <a href="{{ url('contacto/create') }}">
                                 <span class="sub-item">Crear</span>
                             </a>
                         </li>

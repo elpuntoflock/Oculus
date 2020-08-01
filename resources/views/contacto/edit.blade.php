@@ -1,9 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
-@section('title', 'Datos de Usuario')
-
-    <form method="POST" action="{{ route('contacto.store') }}">
+@section('title', 'Datos de Contacto')
+    <form method="POST" action="update">
     @csrf
         @include('contacto.form')
     </form>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Contacto;
 use Illuminate\Http\Request;
 use App\Http\Requests\ContactoCreateRequest;
+//use Session;
+//use Redirect;
+
 
 class ContactoController extends Controller
 {
@@ -21,7 +24,8 @@ class ContactoController extends Controller
 
     public function index()
     {
-        //
+       $contactos= Contacto::all();
+       return view('contacto.index', compact ('contactos'));
     }
 
     /**
@@ -43,16 +47,17 @@ class ContactoController extends Controller
     public function store(ContactoCreateRequest $request)
     {
 
-        $validated = $request->validated();
+        //$validated = $request->validated();
         
         Contacto::create([
             'nombres' => $request['nombres'],
             'apellidos' => $request['apellidos'],
             'sexo' => $request['sexo'],
             'fecha_nac' => $request['fecha_nac'],
+            'tel_celular' => $request['tel_celular'],
             'observaciones' => $request['observaciones']
         ]);
-            return redirect('/contacto/create')->with('message', 'store');
+            return redirect('contacto')->with('status', 'Registro Ingresado');
             //return view('Contacto.create');
     }
 
@@ -75,7 +80,9 @@ class ContactoController extends Controller
      */
     public function edit(Contacto $contacto)
     {
-        //
+        
+        $contacto = Contacto::find($contacto->id);
+        return view('contacto.edit',['contacto'=>$contacto]);
     }
 
     /**
@@ -87,7 +94,13 @@ class ContactoController extends Controller
      */
     public function update(Request $request, Contacto $contacto)
     {
-        //
+        $contacto = Contacto::find($contacto->id);
+        $contacto ->fill($request->all());
+        $contacto->save;
+
+        //$request->session()->flash('status', 'Task was successful!');
+        $session::flash('message', 'Usuario actualizado correctamente');
+        return Redirect::to('/contacto');
     }
 
     /**

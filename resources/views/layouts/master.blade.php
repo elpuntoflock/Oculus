@@ -28,8 +28,8 @@
 						<h4 class="page-title">@yield('title')</h4>
 					</div>
 					<div class="page-category">@yield('Description')</div>
-					
 					@yield('content')
+					</div>
 				</div>
 			</div>
 			@auth
@@ -41,8 +41,8 @@
 	@auth	
 	</div>
 	@endauth
+
 	<!--   Core JS Files   -->
-	
 	<script src="{{ asset('js/core/jquery.3.2.1.min.js') }}"></script>
 	<script src="{{ asset('js/core/popper.min.js') }}"></script>
 	<script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
@@ -58,7 +58,6 @@
 	<script src="{{ asset('js/plugin/moment/moment.min.js') }}"></script>
 
 	<!-- Chart JS -->
-	
 	<script src="{{ asset('js/plugin/chart.js/chart.min.js') }}"></script>
 
 	<!-- jQuery Sparkline -->
@@ -66,9 +65,6 @@
 
 	<!-- Chart Circle -->
 	<script src="{{ asset('js/plugin/chart-circle/circles.min.js') }}"></script>
-
-	<!-- Datatables -->
-	<script src="{{ asset('js/plugin/datatables/datatables.min.js') }}"></script>
 
 	<!-- Bootstrap Notify -->
 	<script src="{{ asset('js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
@@ -111,6 +107,8 @@
 	<script src="{{ asset('js/ready.min.js') }}"></script>
 
 	@include('layouts.part.alert')
+	@yield('ScriptSection')
+
 
 </body>
 </html>

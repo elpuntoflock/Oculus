@@ -26,7 +26,6 @@ class ContactoCreateRequest extends FormRequest
         return [
             'nombres' => 'required|max:50',
             'apellidos' => 'required',
-            
         ];
     }
 }
