@@ -1,7 +1,7 @@
 <div class="col-md-8">
     <div class="card">
         <div class="card-header">
-            <div class="card-title">Base Form Control</div>
+            <div class="card-title">Datos Contacto   {{ $contacto->id ?? '' }} </div> 
         </div>
         <div class="card-body">
             <div class="row mt-4">
@@ -32,8 +32,16 @@
             <div class="row mt-4">
                 <div class="col-md-4">
                     <div class="form-group form-group-default">
-                        <label>Birth Date</label>
-                        <input type="text" class="form-control" id="fecha_nac" name="fecha_nac" value=" {{ $contacto->fecha_nac ?? '' }} " placeholder="Fecha Nacimiento">
+                        <label>Fecha Nacimiento</label>
+                        <div class= "input-group-append date">
+                            
+                            <input type="text" class="form-control datetimepicker" id="datepicker" name="fecha_nac" 
+                            value=  @isset ($contacto->fecha_nac)
+                                                {{ \Carbon\Carbon::parse($contacto->fecha_nac ?? null)->format('d/m/Y') }}
+                                    @endisset 
+                            placeholder="Fecha Nacimiento">
+                            <span class="input-group-text"><i class="fa fa-calendar-check"></i></span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-check">
@@ -53,12 +61,18 @@
                         <input type="text" class="form-control" name="tel_celular" value="{{ $contacto->tel_celular ?? '' }}" placeholder="Celular">
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="form-group form-group-default">
+                        <label>Teléfono</label>
+                        <input type="text" class="form-control" name="tel_trabajo" value="{{ $contacto->tel_trabajo ?? '' }}" placeholder="Teléfono">
+                    </div>
+                </div>
             </div>
             <div class="row mt-4">
                 <div class="col-md-12">
                     <div class="form-group form-group-default">
                         <label>Dirección</label>
-                        <input type="text" class="form-control"  value="{{ $contacto->observaciones ?? ''  }}" placeholder="direccion">
+                        <input type="text" class="form-control" name="direccion" value="{{ $contacto->direccion ?? ''  }}" placeholder="direccion">
                     </div>
                 </div>
             </div>
@@ -66,7 +80,7 @@
                 <div class="col-md-12">
                     <div class="form-group form-group-default">
                         <label for="observaciones" >Observaciones</label>
-                        <textarea class="form-control" id='observaciones'  name= "observaciones" value="{{ $contacto->observaciones ?? ''  }}" placeholder="Observaciones" rows="3">A man who hates loneliness</textarea>
+                        <textarea class="form-control" id='observaciones'  name= "observaciones"  rows="3">{{ $contacto->observaciones ?? ''  }}</textarea>
                     </div>
                 </div>
             </div>

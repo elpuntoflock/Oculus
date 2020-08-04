@@ -27,17 +27,23 @@
                         <td>{{$contacto->tel_celular}}</td>
                         <td>{{$contacto->tel_trabajo}}</td>
                         <td>
-                            <div class="form-button-action">
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" 
-                                data-original-title="Editar Registro" >
-                                <a href="{{ url('contacto') }}/{{$contacto->id}}/edit"> 
-                                    <i class="fa fa-edit"></i>
-                                    </a>
-                                </button>
-                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Eliminar Registro">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </div> 
+                            <form action="{{ route('contacto.destroy',$contacto->id) }}" method="POST">
+                            @csrf
+                                <div class="form-button-action">
+                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" 
+                                    data-original-title="Editar Registro" >
+                                        <a href="{{ route('contacto.edit',$contacto->id) }}"> 
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </button>
+                                    <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" 
+                                    data-original-title="Eliminar Registro">
+                                        <a href="{{ route('contacto.show',$contacto->id) }}"> 
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </button>
+                                </div> 
+                </form>
                         </td>
                     </tr>
                     @endforeach

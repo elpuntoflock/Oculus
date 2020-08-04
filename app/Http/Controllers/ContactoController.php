@@ -44,20 +44,23 @@ class ContactoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    
     public function store(ContactoCreateRequest $request)
     {
-
         //$validated = $request->validated();
         
-        Contacto::create([
+        $fecha_Ymd = \Carbon\Carbon::createFromFormat('d-m-Y', $request->fecha_nac)->format('Y-m-d');
+    
+        $variabl = Contacto::create([
             'nombres' => $request['nombres'],
             'apellidos' => $request['apellidos'],
             'sexo' => $request['sexo'],
-            'fecha_nac' => $request['fecha_nac'],
+            'fecha_nac' => $fecha_Ymd,
             'tel_celular' => $request['tel_celular'],
             'observaciones' => $request['observaciones']
         ]);
-            return redirect('contacto')->with('status', 'Registro Ingresado');
+            return redirect('contacto')->with('status', 'Registro Ingresado   ID=' . $variabl['id'] );
             //return view('Contacto.create');
     }
 
@@ -69,7 +72,8 @@ class ContactoController extends Controller
      */
     public function show(Contacto $contacto)
     {
-        //
+        $contacto = Contacto::find($contacto->id);
+        return view('contacto.show',['contacto'=>$contacto]);
     }
 
     /**
@@ -92,15 +96,18 @@ class ContactoController extends Controller
      * @param  \App\Contacto  $contacto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contacto $contacto)
+    public function update(Request $request, Contacto  $contacto)
     {
-        $contacto = Contacto::find($contacto->id);
-        $contacto ->fill($request->all());
+        $requestdata = $request->all();
+        $fecha_Ymd = \Carbon\Carbon::createFromFormat('d-m-Y', $request->fecha_nac)->format('Y-m-d');
+        $requestdata['fecha_nac'] = $fecha_Ymd;
+        $contacto ->update($requestdata);     
+    
         $contacto->save;
 
         //$request->session()->flash('status', 'Task was successful!');
-        $session::flash('message', 'Usuario actualizado correctamente');
-        return Redirect::to('/contacto');
+        //$session::flash('message', 'Usuario actualizado correctamente');
+        return redirect('contacto')->with('status', 'Registro Actualizado  ID ' . $contacto['id']);
     }
 
     /**
@@ -112,5 +119,10 @@ class ContactoController extends Controller
     public function destroy(Contacto $contacto)
     {
         //
+        echo 'entro a destroy';
+        $contacto->delete();
+  
+        return redirect('contacto')->with('success','Product deleted successfully');
     }
+
 }

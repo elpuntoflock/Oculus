@@ -85,6 +85,7 @@
 	<!-- DateTimePicker -->
 	<script src="{{ asset('js/plugin/datepicker/bootstrap-datetimepicker.min.js') }}"></script>
 
+
 	<!-- Bootstrap Tagsinput -->
 	<script src="{{ asset('js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
 
