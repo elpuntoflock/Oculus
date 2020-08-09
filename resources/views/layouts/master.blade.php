@@ -72,10 +72,6 @@
 	<!-- Bootstrap Toggle -->
 	<script src="{{ asset('js/plugin/bootstrap-toggle/bootstrap-toggle.min.js') }}"></script>
 
-	<!-- jQuery Vector Maps -->
-	<script src="{{ asset('js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
-	<script src="{{ asset('js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
-
 	<!-- Dropzone -->
 	<script src="{{ asset('js/plugin/dropzone/dropzone.min.js') }}"></script>
 
@@ -84,7 +80,6 @@
 
 	<!-- DateTimePicker -->
 	<script src="{{ asset('js/plugin/datepicker/bootstrap-datetimepicker.min.js') }}"></script>
-
 
 	<!-- Bootstrap Tagsinput -->
 	<script src="{{ asset('js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
@@ -108,7 +103,8 @@
 	<script src="{{ asset('js/ready.min.js') }}"></script>
 
 	@include('layouts.part.alert')
-	@yield('ScriptSection')
+	
+	@stack('scriptsSection')
 
 
 </body>

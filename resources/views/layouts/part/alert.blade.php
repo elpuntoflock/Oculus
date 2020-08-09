@@ -8,7 +8,8 @@
 				content.message = ""; 
 				content.url = '';
 				content.target = '_blank';
-            @if(count($errors) > 0) 
+
+            @if($errors->any()) 
 				var state = "warning";
 				@foreach($errors->all() as $error)
 					content.message += "{!!$error!!}"  + '</br>';
@@ -20,7 +21,6 @@
 				} else {
 					content.icon = 'none';
 				}
-				
 
 				$.notify(content,{
 					type: state,
@@ -43,7 +43,6 @@
 				} else {
 					content.icon = 'none';
 				}
-
 
 				$.notify(content,{
 					type: state,

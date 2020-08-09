@@ -26,6 +26,23 @@ class ContactoCreateRequest extends FormRequest
         return [
             'nombres' => 'required|max:50',
             'apellidos' => 'required',
+            'fecha_nac' => 'date_format:d-m-Y|before:today',
         ];
     }
+
+    public function attributes()
+{
+    return [
+        'fecha_nac' => 'Fecha de nacimiento',
+
+    ];
+}
+
+    public function messages () 
+    {
+        return [
+            'fecha_nac.before' => 'La fecha de nacimiento debe ser una fecha anterior a hoy.',
+        ];
+    }
+    
 }
