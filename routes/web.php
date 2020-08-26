@@ -38,6 +38,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/master', 'MasterController@index');
 
+Route::get('/calendario', function () {
+    return view('layouts.calendario');
+});
+
+Route::resource('evento', 'EventoController');
+
 Route::resource('contacto', 'ContactoController');
 
 /* Route::post('contacto/create', function () {

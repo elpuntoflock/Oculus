@@ -76,9 +76,9 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a href="calendar.html">
+                <a href="{{ url('calendario') }}">
                     <i class="flaticon-calendar"></i>
-                    <p>Calendar</p>
+                    <p>Calendario</p>
                     <span class="badge badge-count badge-info">1</span>
                 </a>
             </li>

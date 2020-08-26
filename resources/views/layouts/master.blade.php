@@ -1,5 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <!-- Header -->
 @include('layouts.part.header')
+@stack('headerSection')
+</head>
 <body onload="msgalerta()">
 	@auth
 	<div class="wrapper">
@@ -65,8 +70,8 @@
 	<script src="{{ asset('js/plugin/dropzone/dropzone.min.js') }}"></script>
 
 	<!-- Fullcalendar -->
-	<script src="{{ asset('js/plugin/fullcalendar/fullcalendar.min.js') }}"></script>
-
+	<!-- <script src="{{ asset('js/plugin/fullcalendar/fullcalendar.min.js') }}"></script> -->
+	<script src="{{ asset('js/plugin/fullcalendar/main.min.js') }}"></script>
 	<!-- Bootstrap Tagsinput -->
 	<script src="{{ asset('js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
 
