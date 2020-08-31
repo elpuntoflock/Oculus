@@ -15,8 +15,9 @@ class EventoController extends Controller
     public function index()
     {
         $eventos= Evento::all();
-        //$json = json_encode($eventos);
+        
         return view('evento.index', compact ('eventos'));
+        
     }
 
     /**
@@ -26,7 +27,7 @@ class EventoController extends Controller
      */
     public function create()
     {
-        //
+     //
     }
 
     /**
@@ -37,7 +38,15 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $requestdata = $request->all();
+        //$start_Ymd = \Carbon\Carbon::createFromFormat('d-m-Y', $request->start)->format('Y-m-d');
+        //$requestdata['start'] = $start_Ymd;
+        //$end_Ymd = \Carbon\Carbon::createFromFormat('d-m-Y', $request->end)->format('Y-m-d');
+        // $requestdata['end'] = $end_Ymd;
+        $requestdata['allDay'] = ('true' == $request->allDay) ? 1 : 0;
+        $evento = Evento::create($requestdata);  
+        
+        return redirect('evento')->with('status', 'Registro Ingresado   ID=' . $evento['id'] );
     }
 
     /**

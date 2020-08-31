@@ -6,7 +6,8 @@
 	<!-- CSS Files -->
     <!-- Styles -->
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/azzara.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/azzara.min.css') }}" rel="stylesheet">
+	
 	<link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
 
 	<!-- Fonts and icons -->

@@ -76,7 +76,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a href="{{ url('calendario') }}">
+                <a href="{{ url('evento') }}">
                     <i class="flaticon-calendar"></i>
                     <p>Calendario</p>
                     <span class="badge badge-count badge-info">1</span>

@@ -26,6 +26,7 @@ class ContactoController extends Controller
     {
        $contactos= Contacto::all();
        return view('contacto.index', compact ('contactos'));
+       
     }
 
     /**
