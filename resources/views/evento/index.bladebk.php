@@ -20,6 +20,14 @@
       </form>
     </div>
 
+    <div id="eventModalUpdate" name="eventModalUpdate" class="modal fade" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+      <form id="formModalUpdate" name="formModalUpdate" method="POST" autocomplete="off" action="{{ route('evento.store') }}"> 
+        @csrf
+        @method('PUT') 
+        @include('evento.form')
+      </form>
+    </div>
+
 @endsection
 
 @push('scriptsSection')
@@ -74,30 +82,26 @@
         eventChange: function(info) {
           var fechaStart = new Date(info.event.start);
           var fechaEnd = new Date(info.event.end);
-          var idEvento  = "{{ route('evento.update','') }}";
-          idEvento = idEvento +'/' + info.event.id;
+          var idEvento  = " route('evento.update'," + info.event.id + ") " ;
           fechaStart = fechaStart.toISOString();
           fechaStart = fechaStart.substr(0, fechaStart.length -1);
+          //fechaEnd = fechaEnd.toJSON();
           fechaEnd = fechaEnd.toISOString();
           fechaEnd = fechaEnd.substr(0, fechaEnd.length -1);          
+        
+          alert(idEvento);
+          $('#eventModalUpdate #ModalLabel').html('Actualizar Evento');
+          $("#eventModalUpdate #formModalUpdate").attr('action',  idEvento  );
+          $("#eventModalUpdate #id").val(info.event.id);
+          $("#eventModalUpdate #title").val(info.event.title);
+          $("#eventModalUpdate #start").val(fechaStart);
+          $("#eventModalUpdate #end").val(fechaEnd);
+          $('#eventModalUpdate #allDay').val (info.event.allDay); 
+          
+          $('#eventModalUpdate #evento-ejemplo').attr( "style", "border-color: " + info.event.borderColor + "; color: white; background-color: " + info.event.backgroundColor + ";");
 
-          $('#ModalLabel').html('Actualizar Evento');
-          $("#formModalInsert").attr('action',  idEvento  );
-          $("#_method").val('PUT');
-          $("#id").val(info.event.id);
-          $("#title").val(info.event.title);
-          $("#start").val(fechaStart);
-          $("#end").val(fechaEnd);
-          document.getElementById("allDay").checked = info.event.allDay ? true : false;
-          document.getElementById("startEditable").checked = info.event.startEditable  ? true : false;
-          document.getElementById("durationEditable").checked = info.event.durationEditable == 1 ? true : false;
-          document.getElementById("overlap").checked = info.event.overlap == 1 ? true : false;
-          $("#borderColor").val(info.event.borderColor);
-          $('#textColor').val (info.event.allDay ? 'white' : info.event.textColor);
-          $('#backgroundColor').val (info.event.allDay ? info.event.backgroundColor : 'white');
-          $('#evento-ejemplo').attr( "style", "border-color: " + info.event.borderColor + "; color: " + info.event.textColor + "; background-color: " + info.event.backgroundColor + ";");
-
-          $('#eventModalInsert').modal('toggle'); 
+  
+          $('#eventModalUpdate').modal('show'); 
 
           if (!confirm("is this okay?")) {
             info.revert();
@@ -110,53 +114,40 @@
           var fechaEnd = new Date(arg.end);
           fechaStart = fechaStart.toISOString();
           fechaStart = fechaStart.substr(0, fechaStart.length -1);
+          //fechaEnd = fechaEnd.toJSON();
           fechaEnd = fechaEnd.toISOString();
           fechaEnd = fechaEnd.substr(0, fechaEnd.length -1);
-          $("#_method").val('');
+
           $('#start').val (fechaStart);
           $('#end').val (fechaEnd);
-          document.getElementById("allDay").checked = arg.allDay ? true : false;
-          $('#textColor').val (arg.allDay ? 'white' : 'Deepskyblue');
-          $('#backgroundColor').val (arg.allDay ? 'Deepskyblue' : 'white');
-          $('#borderColor').val ('Deepskyblue');
+          $('#allDay').val (arg.allDay); 
+          if  (arg.allDay ) {
+            document.getElementById("allDay").checked = true;
+          }
           $('#ModalLabel').html('Agregar Evento');
           $("#formModal").attr('action', "{{ route('evento.store') }}");
           $('#eventModalInsert').modal('show'); 
 
-          calendar.unselect()
+          var title = ''; // prompt('Event Title:');
+          if (title) 
+          {
+            calendar.addEvent({
+              title: title,
+              start: arg.start,
+              end: arg.end,
+              allDay: arg.allDay,
+            })
+          }
+          //calendar.unselect()
         },
-        eventClick: function(info) 
+        eventClick: function(arg) 
         {
-          var fechaStart = new Date(info.event.start);
-          var fechaEnd = new Date(info.event.end);
-          var idEvento  = "{{ route('evento.update','') }}";
-          idEvento = idEvento +'/' + info.event.id;
-          fechaStart = fechaStart.toISOString();
-          fechaStart = fechaStart.substr(0, fechaStart.length -1);
-          fechaEnd = fechaEnd.toISOString();
-          fechaEnd = fechaEnd.substr(0, fechaEnd.length -1);          
-
-          $('#ModalLabel').html('Actualizar Evento');
-          $("#formModalInsert").attr('action',  idEvento  );
-          $("#_method").val('PUT');
-          $("#id").val(info.event.id);
-          $("#title").val(info.event.title);
-          $("#start").val(fechaStart);
-          $("#end").val(fechaEnd);
-          document.getElementById("allDay").checked = info.event.allDay ? true : false;
-          document.getElementById("startEditable").checked = info.event.startEditable  ? true : false;
-          document.getElementById("durationEditable").checked = info.event.durationEditable == 1 ? true : false;
-          document.getElementById("overlap").checked = info.event.overlap == 1 ? true : false;
-          $("#borderColor").val(info.event.borderColor);
-          $('#textColor').val (info.event.allDay ? 'white' : info.event.textColor);
-          $('#backgroundColor').val (info.event.allDay ? info.event.backgroundColor : 'white');
-          $('#evento-ejemplo').attr( "style", "border-color: " + info.event.borderColor + "; color: " + info.event.textColor + "; background-color: " + info.event.backgroundColor + ";");
-
-          $('#eventModalInsert').modal('toggle'); 
-
-          /* if (!confirm("is this okay?")) {
-            info.revert();
-          } */
+          $('#eventModalUpdate #ModalLabel').html('Agregar Evento');
+          $("#formModalUpdate").attr('action', "{{ route('evento.update'," + arg.id + ") }}");
+          $('#eventModalUpdate').modal('show'); 
+          if (confirm('Are you sure you want to delete this event?')) {
+            arg.event.remove()
+          }
         },
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
@@ -186,30 +177,4 @@
       }
     }
   </script>
-
-  <script>
-    $(document).on('ready',function(){
-        var SITEURL = "{{ route('evento.update','') }}" ;
-
-      $(btn-ingresar).click(function(){
-        var url = SITEURL + '\evento' + $(id);                                     
-
-        $.ajax({     
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },                   
-            type: "POST",                 
-            url: url,                    
-            data: $(formModalInsert).serialize(),
-            success: function(data)            
-            {
-                $(id).html(data);           
-            }
-         });
-        
-
-      });
-    });
-  </script>
-  
 @endpush

@@ -46,9 +46,8 @@ Route::resource('evento', 'EventoController');
 
 Route::resource('contacto', 'ContactoController');
 
-/* Route::post('contacto/create', function () {
-    // Validate the request...
-
-    return back()->withInput();
-}
-);  */
+//fullcalendar
+Route::get('/fullcalendareventmaster','FullCalendarEventMasterController@index');
+Route::post('/fullcalendareventmaster/create','FullCalendarEventMasterController@create');
+Route::post('/fullcalendareventmaster/update','FullCalendarEventMasterController@update');
+Route::post('/fullcalendareventmaster/delete','FullCalendarEventMasterController@destroy');
