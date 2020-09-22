@@ -42,6 +42,14 @@ Route::get('/calendario', function () {
     return view('layouts.calendario');
 });
 
+Route::get('/factura', function () {
+    return view('factura.factura');
+});
+
+Route::post('/evento/create', function () {
+    return view('evento.create');
+});
+
 Route::resource('evento', 'EventoController');
 
 Route::resource('contacto', 'ContactoController');

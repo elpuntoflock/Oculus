@@ -45,7 +45,7 @@
         },
         businessHours: [ // specify an array instead
         {
-          daysOfWeek: [ 1,2,3,4,5 ], 
+          daysOfWeek: [ 1, 2, 3,4,5 ], // Monday, Tuesday, Wednesday
           startTime: '08:00', // 8am
           endTime: '17:00' // 6pm
         },
@@ -64,12 +64,12 @@
           var fechaStart = new Date(info.event.start);
           var fechaEnd = new Date(info.event.end);
           var idEvento  = "{{ route('evento.update','') }}";
-          
           idEvento = idEvento +'/' + info.event.id;
           fechaStart = fechaStart.toISOString();
           fechaStart = fechaStart.substr(0, fechaStart.length -1);
           fechaEnd = fechaEnd.toISOString();
-          fechaEnd = fechaEnd.substr(0, fechaEnd.length -1);                    
+          fechaEnd = fechaEnd.substr(0, fechaEnd.length -1);  
+                  
 
           $('#ModalLabel').html('Actualizar Evento');
           $("#formModalInsert").attr('action',  idEvento  );
@@ -95,57 +95,54 @@
           $('#backgroundColor').val (info.event.allDay ? info.event.backgroundColor : 'white');
           $('#evento-ejemplo').attr( "style", "border-color: " + info.event.borderColor + "; color: " + info.event.textColor + "; background-color: " + info.event.backgroundColor + ";");
 
-          $('#eventModalInsert').modal('show'); 
+          $('#eventModalInsert').modal('toggle'); 
           info.revert();
         },
         
         select: function(arg) 
         {
-          var idEvento  = "{{ route('evento.store') }}";
           var fechaStart = new Date(arg.start);
           var fechaEnd = new Date(arg.end);
-
           fechaStart = fechaStart.toISOString();
           fechaStart = fechaStart.substr(0, fechaStart.length -1);
           fechaEnd = fechaEnd.toISOString();
           fechaEnd = fechaEnd.substr(0, fechaEnd.length -1);
 
-          $("#title").val('');
-          $("#_method").val('');
-          if (arg.start) {
-            $("#start").val(fechaStart);    
-          } else {
-            fechaStart = null;
-          }
-          if (arg.end) {
-            $("#end").val(fechaEnd);
-          } else {
-            fechaEnd = null;
-          }
+
           document.getElementById("allDay").checked = arg.allDay ? true : false;
           $('#textColor').val (arg.allDay ? 'white' : 'Deepskyblue');
           $('#backgroundColor').val (arg.allDay ? 'Deepskyblue' : 'white');
           $('#borderColor').val ('Deepskyblue');
           $('#ModalLabel').html('Agregar Evento');
-          $("#formModalInsert").attr('action', idEvento);
-          $('#eventModalInsert').modal('show');
-          $('#title').trigger('focus'); 
+          $("#formModal").attr('action', "{{ route('evento.store') }}");
+
+
+          $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "{{ route('evento.create') }}",
+            data: {'fechaStart': fechaStart, 'fechaEnd':fechaEnd, 'allDay':arg.allDay},
+            dataType: 'html',
+          });
+
 
           calendar.unselect();
         },
         eventClick: function(info) 
         {
           var fechaStart = new Date(info.event.start);
-          var fechaEnd = new Date(info.event.end);
-          var idEvento  = "{{ route('evento.update','') }}";
-
           fechaStart = fechaStart.toISOString();
           fechaStart = fechaStart.substr(0, fechaStart.length -1);
-          
+        
+          var fechaEnd = new Date(info.event.end);
           fechaEnd = fechaEnd.toISOString();
           fechaEnd = fechaEnd.substr(0, fechaEnd.length -1);          
           
-          idEvento = idEvento +'/' + info.event.id; 
+          var idEvento  = "{{ route('evento.update','') }}";
+          idEvento = idEvento +'/' + info.event.id;
+          
           
           $('#ModalLabel').html('Actualizar Evento');
           $("#formModalInsert").attr('action',  idEvento  );
@@ -172,7 +169,7 @@
           $('#backgroundColor').val (info.event.allDay ? info.event.backgroundColor : 'white');
           $('#evento-ejemplo').attr( "style", "border-color: " + info.event.borderColor + "; color: " + info.event.textColor + "; background-color: " + info.event.backgroundColor + ";");
 
-          $('#eventModalInsert').modal('show'); 
+          $('#eventModalInsert').modal('toggle'); 
           info.revert;
         },
         

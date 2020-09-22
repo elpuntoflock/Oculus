@@ -24,12 +24,14 @@ class EventoCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'         => 'required|max:500',
+            'title'             => 'required|max:500',
             'allDay'            => 'boolean',
             'editable'          => 'boolean',
             'startEditable'     => 'boolean',
             'durationEditable'  => 'boolean',
-            'overlap'           => 'boolean',
+            'overlap'           => 'required|boolean',
+            'start'             => 'required',
+            'end'               => 'required',
             
         ];
     }
