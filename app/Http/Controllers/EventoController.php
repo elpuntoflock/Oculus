@@ -49,6 +49,7 @@ class EventoController extends Controller
         $requestdata['overlap'] = ($request->durationEditable) ? 1 : 0;
         
         
+        
         $evento = Evento::create($requestdata);  
       
         return redirect('evento')->with('status', 'Registro Ingresado   ID=' . $evento['id'] );
@@ -88,12 +89,13 @@ class EventoController extends Controller
     public function update(Request $request, Evento $evento)
     {
         $requestdata = $request->all();
+        
         $requestdata['allDay'] = ($request->allDay) ? 1 : 0;
         $requestdata['editable'] = ($request->editable) ? 1 : 0;
         $requestdata['startEditable'] = ($request->startEditable) ? 1 : 0;
         $requestdata['durationEditable'] = ($request->durationEditable) ? 1 : 0;
         $requestdata['overlap'] = ($request->overlap) ? 1 : 0;
-        
+        console.print($request->cantidad());
         $requestdata['backgroundColor'] = ($request->allDay) ?  $requestdata['borderColor']  : 'white';
         $requestdata['textColor'] = ($request->allDay) ?  'white' : $requestdata['borderColor'];
         $evento ->update($requestdata);     
