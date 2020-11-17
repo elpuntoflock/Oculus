@@ -76,11 +76,23 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a href="{{ url('evento') }}">
+                <a data-toggle="collapse" href="#calendario"> 
                     <i class="flaticon-calendar"></i>
                     <p>Calendario</p>
                     <span class="badge badge-count badge-info">1</span>
                 </a>
+                <div class="collapse" id="calendario">
+                    <ul class="nav nav-collapse">
+                        <li>
+                            <a href="{{ url('evento') }}">
+                                <span class="sub-item">Eventos</span>    
+                            </a>
+                            <a href="{{ url('evento/edit') }}">
+                                <span class="sub-item">Editar Eventos</span>    
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li class="nav-item">
                 <a href="widgets.html">

@@ -38,6 +38,11 @@
             prevYear: 'la flaticon-left-double-arrow',
             nextYear: 'la flaticon-right-double-arrow'
         },
+        eventTimeFormat: { // like '14:30:00'
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        },
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
@@ -50,7 +55,7 @@
           endTime: '17:00' // 6pm
         },
         {
-          daysOfWeek: [6], // Thursday, Friday
+          daysOfWeek: [6], // Monday - Saturday
           startTime: '10:00', // 10am
           endTime: '16:00' // 4pm
         }],
@@ -135,6 +140,11 @@
         },
         eventClick: function(info) 
         {
+          //var idEvento  = "{{ route('evento.edit', '' ) }}";
+          var idEvento  = '/evento/' + info.event.id + '/edit'; 
+
+          parent.location= idEvento;
+/*
           var fechaStart = new Date(info.event.start);
           var fechaEnd = new Date(info.event.end);
           var idEvento  = "{{ route('evento.update','') }}";
@@ -173,6 +183,7 @@
           $('#evento-ejemplo').attr( "style", "border-color: " + info.event.borderColor + "; color: " + info.event.textColor + "; background-color: " + info.event.backgroundColor + ";");
 
           $('#eventModalInsert').modal('show'); 
+          */
           info.revert;
         },
         

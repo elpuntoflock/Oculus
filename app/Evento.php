@@ -8,6 +8,7 @@ class Evento extends Model
 {
     protected $fillable = [
         'title', 
+        'description',
         'allDay', 
         'start', 
         'end',
@@ -20,6 +21,11 @@ class Evento extends Model
     ];
     
     protected $cast = [
-        'allday' => 'boolean',
+        'allDay' => 'boolean',
     ];
+
+    public function notifications()
+    {
+        return $this->hasMany('App\Notification');
+    }
 }

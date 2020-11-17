@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Evento;
+use App\Notification;
 use Illuminate\Http\Request;
 
 class EventoController extends Controller
@@ -15,9 +16,9 @@ class EventoController extends Controller
     public function index()
     {
         $eventos= Evento::all();
-        
+
         return view('evento.index', compact ('eventos'));
-        
+
     }
 
     /**
@@ -27,7 +28,7 @@ class EventoController extends Controller
      */
     public function create(Request $request)
     {
-       
+
         $evento['allDay'] = ($request->allDay) ? 1 : 0;
         return view('evento.create',['evento'=>$evento]);
     }
@@ -41,17 +42,14 @@ class EventoController extends Controller
     public function store(Request $request)
     {
         $requestdata = $request->all();
- 
         $requestdata['allDay'] = ($request->allDay) ? 1 : 0;
         $requestdata['editable'] = ($request->editable) ? 1 : 0;
         $requestdata['startEditable'] = ($request->startEditable) ? 1 : 0;
         $requestdata['durationEditable'] = ($request->durationEditable) ? 1 : 0;
         $requestdata['overlap'] = ($request->durationEditable) ? 1 : 0;
-        
-        
-        
-        $evento = Evento::create($requestdata);  
-      
+
+        $evento = Evento::create($requestdata);
+
         return redirect('evento')->with('status', 'Registro Ingresado   ID=' . $evento['id'] );
     }
 
@@ -64,7 +62,7 @@ class EventoController extends Controller
     public function show(Evento $evento)
     {
         $evento = Evento::find($evento->id);
-        
+
         return view('evento.show',['evento'=>$evento]);
     }
 
@@ -76,7 +74,14 @@ class EventoController extends Controller
      */
     public function edit(Evento $evento)
     {
-        //
+        $evento = Evento::find($evento->id);
+        $evento['start']    = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $evento['start']) ->format('Y-m-d\TH:i');
+        $evento['end']      = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $evento['end'])   ->format('Y-m-d\TH:i');
+
+        $noti = Evento::find($evento->id)->notifications;
+
+        return view('evento.edit',['evento'=>$evento, 'noti'=>$noti]);
+
     }
 
     /**
@@ -89,18 +94,36 @@ class EventoController extends Controller
     public function update(Request $request, Evento $evento)
     {
         $requestdata = $request->all();
-        
         $requestdata['allDay'] = ($request->allDay) ? 1 : 0;
         $requestdata['editable'] = ($request->editable) ? 1 : 0;
         $requestdata['startEditable'] = ($request->startEditable) ? 1 : 0;
         $requestdata['durationEditable'] = ($request->durationEditable) ? 1 : 0;
         $requestdata['overlap'] = ($request->overlap) ? 1 : 0;
-        console.print($request->cantidad());
-        $requestdata['backgroundColor'] = ($request->allDay) ?  $requestdata['borderColor']  : 'white';
-        $requestdata['textColor'] = ($request->allDay) ?  'white' : $requestdata['borderColor'];
-        $evento ->update($requestdata);     
-        
 
+        $evento -> update($requestdata);
+        if (isset($requestdata['tipoNoti'])) {
+        foreach ($requestdata['tipoNoti'] as $clave => $notif) {
+            if ($requestdata['id'][$clave] == '')
+            {
+                $notificacionesInsert[] =
+                new Notification(array(
+                    'tipoNotificacion'  => $notif,
+                    'cantidad'          => $requestdata['cantidad'][$clave],
+                    'duracion'          => $requestdata['duracion'][$clave]
+                ));
+            };
+            if ($requestdata['accion'][$clave] == 'borrar' )
+            {
+                Notification::Destroy($requestdata['id'][$clave]);
+                break;
+            };
+        };
+        };
+
+        if (isset($notificacionesInsert)) {
+            $evento->notifications()->saveMany($notificacionesInsert);
+            $evento->refresh();
+        }
         return redirect('evento')->with('status', 'Registro Actualizado  ID ' . $evento['id']);
     }
 

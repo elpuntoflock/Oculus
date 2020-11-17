@@ -74,7 +74,7 @@
             <th scope="col" display:none></th>
             <th scope="col">Tipo</th>
             <th scope="col">Cantidad</th>
-            <th scope="col">Duración   </th>
+            <th scope="col">Duración</th>
             <th scope="col">  
               <button type="button" onclick="agregarFila()" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-md" data-original-title="Eliminar Registro">
                   <a> <i class="fa fa-plus"></i> </a>

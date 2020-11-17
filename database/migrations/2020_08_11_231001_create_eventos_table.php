@@ -27,6 +27,7 @@ class CreateEventosTable extends Migration
             $table->datetime('starRecur')  -> nullable();
             $table->datetime('endRecur')  -> nullable();
             $table->string('title',50);
+            $table->datetime('description',300)  -> nullable();
             $table->string('url',50)  -> nullable();
             $table->string('classNames',50)  -> nullable();
             $table->boolean('editable')  -> nullable();
