@@ -114,8 +114,15 @@ class EventoController extends Controller
             };
             if ($requestdata['accion'][$clave] == 'borrar' )
             {
-                Notification::Destroy($requestdata['id'][$clave]);
-                break;
+                Notification::destroy($requestdata['id'][$clave]);
+            };
+            if ($requestdata['accion'][$clave] == 'actualizar' )
+            {
+                $notifi = Notification::find($requestdata['id'][$clave]);
+                $notifi -> tipoNotificacion = $notif;
+                $notifi -> cantidad = $requestdata['cantidad'][$clave];
+                $notifi -> duracion = $requestdata['duracion'][$clave];
+                $notifi -> save();
             };
         };
         };

@@ -61,9 +61,9 @@
                     </div>
 
                     <div class="form-group form-group-default">
-                    <input hidden id="backgroundColor"  name= "backgroundColor" type="text" class="form-control" val= '{{ $evento->backgroundColor }}' >
-                    <input hidden id="borderColor"      name= "borderColor"     type="text" class="form-control" val= '{{ $evento->borderColor }}' >
-                    <input hidden id="textColor"        name= "textColor"       type="text" class="form-control" val= '{{ $evento->textColor }}'>
+                    <input id="backgroundColor"  name= "backgroundColor" type="hidden" class="form-control" value= '{{ $evento->backgroundColor }}' >
+                    <input id="borderColor"      name= "borderColor"     type="hidden" class="form-control" value= '{{ $evento->borderColor }}' >
+                    <input id="textColor"        name= "textColor"       type="hidden" class="form-control" value= '{{ $evento->textColor }}'>
 
                     <button id="evento-ejemplo" name="evento-ejemplo" style="border-color: {{ $evento->borderColor }}; color: {{ $evento->textColor }}; background-color: {{ $evento->backgroundColor }};" class="btn-round" disabled btn-xs>Ejemplo de evento</button>
 
@@ -93,13 +93,13 @@
                     <tbody>
                     @foreach($noti as $notif)
                     <tr value='{{$notif->id}}'>
-                        <td><select name="tipoNoti[]" class="form-control form-control-sm">
+                        <td><select name="tipoNoti[]" onchange="cambioData({{$notif->id}})" class="form-control form-control-sm">
                                 <option value="1" @if ($notif->tipoNotificacion == "1")  selected @endif >Notificación</option>
                                 <option value="2" @if ($notif->tipoNotificacion == "2")  selected @endif >correo electrónico</option>
                             </select>
                         </td>
-                        <td><input name="cantidad[]" type="text" min="5" max="366" value='{{ $notif->cantidad }}' placeholder= "99" class="form-control"></td>
-                        <td><select name="duracion[]" class="form-control form-control-sm" >
+                        <td><input name="cantidad[]" onchange="cambioData({{$notif->id}})" type="text" min="5" max="366" value='{{ $notif->cantidad }}' placeholder= "99" class="form-control"></td>
+                        <td><select name="duracion[]" onchange="cambioData({{$notif->id}})" class="form-control form-control-sm" >
                                 <option value="mi" @if ($notif->duracion == "mi")  selected @endif >Minutos</option>
                                 <option value="hh" @if ($notif->duracion == "hh")  selected @endif>Horas</option>
                                 <option value="dd" @if ($notif->duracion == "dd")  selected @endif>Días</option> </select></td>
@@ -128,7 +128,7 @@
     @push('scriptsSection')
     <script>
     //Elimina las filas de la tabla
-        $(function () {
+        $(function eliminarfila() {
             $(document).on('click', 'button.btn-danger', function ()
             {
                 if ($(this).val()) {
@@ -186,6 +186,10 @@
                 color = document.getElementById("evento-ejemplo").style.borderColor;
                 colorEvento(color);
             }
+        }
+
+        function cambioData (idCambio) {
+            document.getElementById("accion[" + idCambio + "]").value= 'actualizar';
         }
     </script>
 
