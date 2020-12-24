@@ -1,7 +1,12 @@
 <div class="col-md-8">
     <div class="card">
         <div class="card-header">
-            <div class="card-title">Datos Contacto   {{ $contacto->id ?? '' }} </div> 
+            <div class="card-title">Datos Contacto   {{ $contacto->id ?? '' }}
+                <button class="close" form="formcancel" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
         </div>
         <div class="card-body">
             <div class="row mt-4">
@@ -27,18 +32,18 @@
                         @enderror
                     </div>
                 </div>
-            
+
             </div>
             <div class="row mt-4">
                 <div class="col-md-6">
                     <div class="form-group form-group-default">
                         <label>Fecha Nacimiento</label>
                         <div class= "input-group-append date">
-                            
-                            <input type="text" class="form-control datetimepicker" id="datepicker" name="fecha_nac" 
+
+                            <input type="text" class="form-control datetimepicker" id="datepicker" name="fecha_nac"
                             value=  @isset ($contacto->fecha_nac)
                                                 {{ \Carbon\Carbon::parse($contacto->fecha_nac ?? null)->format('d/m/Y') }}
-                                    @endisset 
+                                    @endisset
                             placeholder="Fecha Nacimiento">
                             <span class="input-group-text"><i class="fa fa-calendar-check"></i></span>
                         </div>
@@ -88,11 +93,11 @@
         <div class="card-footer">
                 <div class="text-right mt-3 mb-3">
                     <button class="btn btn-success">Aceptar</button>
-                    <button class="btn btn-danger">Cancelar</button>
+                    <button class="btn btn-danger" form="formcancel" >Cancelar</button>
                 </div>
         </div>
     </div>
-</div> 
+</div>
 
 
 @push('scriptsSection')
