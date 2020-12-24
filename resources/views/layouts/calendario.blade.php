@@ -4,7 +4,7 @@
     <link href="{{ asset('css/main.min.css') }}" rel="stylesheet">
     <script src="{{ asset('js/plugin/fullcalendar/main.js') }}"></script>
     <script src="{{ asset('js/plugin/fullcalendar/locales/es-us.js') }}"></script>
-    
+
 @endpush
 
 @section('content')
@@ -18,11 +18,11 @@
 <script>
 
 document.addEventListener('DOMContentLoaded', function() {
-    
+
   var calendarEl = document.getElementById('calendar');
 
   var calendar = new FullCalendar.Calendar(calendarEl, {
-    locale: 'es-us',   
+    locale: 'es-us',
     buttonText: {
       today: "Hoy",
       month: "Mes",

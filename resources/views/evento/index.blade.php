@@ -2,10 +2,10 @@
 @push('headerSection')
     <!-- Fullcalendar -->
     <link href="{{ asset('css/fullcalendar/main.min.css') }}" rel="stylesheet">
-    
+
     <script src="{{ asset('js/plugin/fullcalendar/main.min.js') }}"></script>
     <script src="{{ asset('js/plugin/fullcalendar/locales/es-us.js') }}"></script>
-  
+
 @endpush
 
 @section('content')
@@ -14,9 +14,9 @@
     <div id='calendar'></div>
 
     <div id="eventModalInsert" name="eventModalInsert" class="modal fade" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-      <form id="formModalInsert" name="formModalInsert" method="POST" autocomplete="off" action="{{ route('evento.store') }}"> 
+      <form id="formModalInsert" name="formModalInsert" method="POST" autocomplete="off" action="{{ route('evento.store') }}">
         @csrf
-        @include('evento.form')
+        @include('evento.formmdl')
       </form>
     </div>
 
@@ -25,10 +25,10 @@
 @push('scriptsSection')
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
+
       var calendarEl = document.getElementById('calendar');
 
-      var calendar = new FullCalendar.Calendar(calendarEl, 
+      var calendar = new FullCalendar.Calendar(calendarEl,
       {
         locale: 'es-us',
         timeZone: 'America/Guatemala',
@@ -50,7 +50,7 @@
         },
         businessHours: [ // specify an array instead
         {
-          daysOfWeek: [ 1,2,3,4,5 ], 
+          daysOfWeek: [ 1,2,3,4,5 ],
           startTime: '08:00', // 8am
           endTime: '17:00' // 6pm
         },
@@ -59,7 +59,7 @@
           startTime: '10:00', // 10am
           endTime: '16:00' // 4pm
         }],
-       
+
         nowIndicator : true,
         navLinks: true, // can click day/week names to navigate views
         selectable: true,
@@ -69,12 +69,12 @@
           var fechaStart = new Date(info.event.start);
           var fechaEnd = new Date(info.event.end);
           var idEvento  = "{{ route('evento.update','') }}";
-          
+
           idEvento = idEvento +'/' + info.event.id;
           fechaStart = fechaStart.toISOString();
           fechaStart = fechaStart.substr(0, fechaStart.length -1);
           fechaEnd = fechaEnd.toISOString();
-          fechaEnd = fechaEnd.substr(0, fechaEnd.length -1);                    
+          fechaEnd = fechaEnd.substr(0, fechaEnd.length -1);
 
           $('#ModalLabel').html('Actualizar Evento');
           $("#formModalInsert").attr('action',  idEvento  );
@@ -82,7 +82,7 @@
           $("#id").val(info.event.id);
           $("#title").val(info.event.title);
           if (info.event.start) {
-            $("#start").val(fechaStart);    
+            $("#start").val(fechaStart);
           } else {
             fechaStart = null;
           }
@@ -100,11 +100,11 @@
           $('#backgroundColor').val (info.event.allDay ? info.event.backgroundColor : 'white');
           $('#evento-ejemplo').attr( "style", "border-color: " + info.event.borderColor + "; color: " + info.event.textColor + "; background-color: " + info.event.backgroundColor + ";");
 
-          $('#eventModalInsert').modal('show'); 
+          $('#eventModalInsert').modal('show');
           info.revert();
         },
-        
-        select: function(arg) 
+
+        select: function(arg)
         {
           var idEvento  = "{{ route('evento.store') }}";
           var fechaStart = new Date(arg.start);
@@ -118,7 +118,7 @@
           $("#title").val('');
           $("#_method").val('');
           if (arg.start) {
-            $("#start").val(fechaStart);    
+            $("#start").val(fechaStart);
           } else {
             fechaStart = null;
           }
@@ -134,64 +134,25 @@
           $('#ModalLabel').html('Agregar Evento');
           $("#formModalInsert").attr('action', idEvento);
           $('#eventModalInsert').modal('show');
-          $('#title').trigger('focus'); 
+          $('#title').trigger('focus');
 
           calendar.unselect();
         },
-        eventClick: function(info) 
+        eventClick: function(info)
         {
           //var idEvento  = "{{ route('evento.edit', '' ) }}";
-          var idEvento  = '/evento/' + info.event.id + '/edit'; 
+          var idEvento  = '/evento/' + info.event.id + '/edit';
 
           parent.location= idEvento;
-/*
-          var fechaStart = new Date(info.event.start);
-          var fechaEnd = new Date(info.event.end);
-          var idEvento  = "{{ route('evento.update','') }}";
 
-          fechaStart = fechaStart.toISOString();
-          fechaStart = fechaStart.substr(0, fechaStart.length -1);
-          
-          fechaEnd = fechaEnd.toISOString();
-          fechaEnd = fechaEnd.substr(0, fechaEnd.length -1);          
-          
-          idEvento = idEvento +'/' + info.event.id; 
-          
-          $('#ModalLabel').html('Actualizar Evento');
-          $("#formModalInsert").attr('action',  idEvento  );
-          $("#_method").val('PUT');
-          $("#id").val(info.event.id);
-          $("#title").val(info.event.title);
-          if (info.event.start) {
-            $("#start").val(fechaStart);    
-          } else {
-            fechaStart = null;
-          }
-          if (info.event.end) {
-            $("#end").val(fechaEnd);
-          } else {
-            fechaEnd = null;
-          }
-          
-          document.getElementById("allDay").checked = info.event.allDay ? true : false;
-          document.getElementById("startEditable").checked = info.event.startEditable  ? true : false;
-          document.getElementById("durationEditable").checked = info.event.durationEditable == 1 ? true : false;
-          document.getElementById("overlap").checked = info.event.overlap == 1 ? true : false;
-          $("#borderColor").val(info.event.borderColor);
-          $('#textColor').val (info.event.allDay ? 'white' : info.event.textColor);
-          $('#backgroundColor').val (info.event.allDay ? info.event.backgroundColor : 'white');
-          $('#evento-ejemplo').attr( "style", "border-color: " + info.event.borderColor + "; color: " + info.event.textColor + "; background-color: " + info.event.backgroundColor + ";");
-
-          $('#eventModalInsert').modal('show'); 
-          */
           info.revert;
         },
-        
+
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
-        
+
         events: {!! $eventos->toJson() !!},
-        
+
         }
       );
       calendar.setOption('locale', 'es-us');
@@ -200,46 +161,31 @@
 
   </script>
 
-  <script>
-    function colorEvento(color) {
-      $('#evento').val(color);
-      if (document.getElementById("allDay").checked) {
-        $('#evento-ejemplo').attr( "style", "border-color: " + color + "; color: white; background-color: " + color + ";");
-        $('#backgroundColor').val(color);
-        $('#textColor').val('white');
-        $('#borderColor').val(color);
-      } else {
-          $('#evento-ejemplo').attr( "style", "border-color: " + color + "; color: " + color + "; background-color: white;");  
-          $('#backgroundColor').val("white");
-          $('#textColor').val(color);
-          $('#borderColor').val(color);
-      }
-    }
-  </script>
+    @include('evento.part.colorevento')
 
   <script>
     $(document).on('ready',function(){
         var SITEURL = "{{ route('evento.update','') }}" ;
 
       $(btn-ingresar).click(function(){
-        var url = SITEURL + '\evento' + $(id);                                     
+        var url = SITEURL + '\evento' + $(id);
 
-        $.ajax({     
+        $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },                   
-            type: "POST",                 
-            url: url,                    
+            },
+            type: "POST",
+            url: url,
             data: $(formModalInsert).serialize(),
-            success: function(data)            
+            success: function(data)
             {
-                $(id).html(data);           
+                $(id).html(data);
             }
          });
-        
+
 
       });
     });
   </script>
-  
+
 @endpush

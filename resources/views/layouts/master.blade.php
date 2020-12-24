@@ -17,12 +17,12 @@
 				<!-- Navbar Header -->
 				@include('layouts.part.navbar')
 				<!-- End Navbar -->
-			
+
 			</div>
 			<!-- Sidebar -->
 				@include('layouts.part.sidebar')
 		@endauth
-		
+
 		<!-- End Sidebar -->
 		@auth
 		<div class="main-panel">
@@ -43,7 +43,7 @@
 		@auth
 		</div>
 		@endauth
-	@auth	
+	@auth
 	</div>
 	@endauth
 
@@ -52,7 +52,7 @@
 	<script src="{{ asset('js/core/popper.min.js') }}"></script>
 	<script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
 
-	<!-- jQuery UI -->	
+	<!-- jQuery UI -->
 	<script src="{{ asset('js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
 	<script src="{{ asset('js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
 
@@ -89,7 +89,7 @@
 	<script src="{{ asset('js/ready.min.js') }}"></script>
 
 	@include('layouts.part.alert')
-	
+
 	@stack('scriptsSection')
 
 
