@@ -3,18 +3,21 @@
 
 @endpush
 
+@auth
 @section('content')
     @section('title', 'Agregar Evento')
 
-        <div id="eventModalInsert" name="eventModalInsert" class="modal fade" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-        <form id="formModalInsert" name="formModalInsert" method="POST" autocomplete="off" action="{{ route('evento.store') }}"> 
+        <div id="eventInsert" name="eventInsert" class="" >
+        <form id="formInsert" name="formInsert" method="POST" autocomplete="off" action="{{ route('evento.store') }}">
             @csrf
             @include('evento.form')
         </form>
         </div>
 
-    @endsection
-
+@endsection
+@endauth
 @push('scriptsSection')
- 
+    @include('evento.part.notif')
+    @include('evento.part.colorevento')
 @endpush
+
