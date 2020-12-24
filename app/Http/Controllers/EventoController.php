@@ -30,7 +30,7 @@ class EventoController extends Controller
     {
 
         $evento['allDay'] = ($request->allDay) ? 1 : 0;
-        return view('evento.create',['evento'=>$evento]);
+        return view('evento.create');
     }
 
     /**
@@ -49,6 +49,22 @@ class EventoController extends Controller
         $requestdata['overlap'] = ($request->durationEditable) ? 1 : 0;
 
         $evento = Evento::create($requestdata);
+
+        if (isset($requestdata['tipoNoti'])) {
+            foreach ($requestdata['tipoNoti'] as $clave => $notif) {
+                    $notificacionesInsert[] =
+                    new Notification(array(
+                        'tipoNotificacion'  => $notif,
+                        'cantidad'          => $requestdata['cantidad'][$clave],
+                        'duracion'          => $requestdata['duracion'][$clave]
+                    ));
+            };
+            };
+
+            if (isset($notificacionesInsert)) {
+                $evento->notifications()->saveMany($notificacionesInsert);
+                $evento->refresh();
+            }
 
         return redirect('evento')->with('status', 'Registro Ingresado   ID=' . $evento['id'] );
     }
@@ -142,6 +158,13 @@ class EventoController extends Controller
      */
     public function destroy(Evento $evento)
     {
-        //
+        var_dump($evento);
+
+        $notifications = Notification::where('evento_id', $evento->id) -> delete();
+        var_dump($notifications);
+
+        $evento->delete();
+
+        return redirect('evento')->with('status', 'Evento Eliminado   ID= ' . $evento['id']);
     }
 }
