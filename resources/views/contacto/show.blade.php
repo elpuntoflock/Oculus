@@ -7,5 +7,6 @@
 	@method('DELETE')
         @include('contacto.form')
     </form>
+    <form id="formcancel" method="GET" action="{{ url('contacto') }}"> </form>
 @endsection
 
